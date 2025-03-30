@@ -14,7 +14,11 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const FormComponent: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
@@ -27,7 +31,10 @@ const FormComponent: React.FC = () => {
   const onSubmit = (data: FormData) => mutation.mutate(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-6 shadow-lg rounded-lg">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="p-6 shadow-lg rounded-lg"
+    >
       <input {...register("email")} placeholder="Email" />
       {errors.email && <span>{errors.email.message}</span>}
 
