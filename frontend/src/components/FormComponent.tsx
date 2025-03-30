@@ -31,18 +31,24 @@ const FormComponent: React.FC = () => {
   const onSubmit = (data: FormData) => mutation.mutate(data);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="p-6 shadow-lg rounded-lg"
-    >
-      <input {...register("email")} placeholder="Email" />
-      {errors.email && <span>{errors.email.message}</span>}
+    <div className="flex flex-col">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="p-6 shadow-lg rounded-lg"
+      >
+        <input {...register("email")} placeholder="Email" />
+        {errors.email && <span>{errors.email.message}</span>}
 
-      <input {...register("password")} type="password" placeholder="Password" />
-      {errors.password && <span>{errors.password.message}</span>}
+        <input
+          {...register("password")}
+          type="password"
+          placeholder="Password"
+        />
+        {errors.password && <span>{errors.password.message}</span>}
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 
