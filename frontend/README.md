@@ -69,5 +69,3 @@ Ensure that the backend server is also running. Once both are up, visit the fron
 
 ### 📌 Notes:
 - If you face **CORS issues**, ensure the backend has proper CORS setup.
-
-🚀 Happy coding!
