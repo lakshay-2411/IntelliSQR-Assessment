@@ -7,5 +7,5 @@ export const handleError = (
   statusCode: number = 500
 ) => {
   console.error(error);
-  res.status(statusCode).json({ success: false, message });
+  return res.status(statusCode).json({ success: false, message });
 };

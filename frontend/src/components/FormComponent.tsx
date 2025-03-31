@@ -18,14 +18,22 @@ const FormComponent: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => api.post("/register", data),
-    onSuccess: () => toast.success("User registered successfully!"),
-    onError: () => toast.error("Registration failed. Try again."),
+    onSuccess: () => {
+      toast.success("User registered successfully!");
+      reset();
+    },
+    onError: (err: any) => {
+      const errorMessage =
+        err.response?.data?.message || "Internal server error";
+      toast.error(errorMessage);
+    },
   });
 
   const onSubmit = (data: FormData) => mutation.mutate(data);
@@ -43,7 +51,9 @@ const FormComponent: React.FC = () => {
             placeholder="UID"
             className="w-full border border-gray-300 rounded-md p-2 placeholder:text-sm"
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+          )}
 
           <input
             {...register("password")}
@@ -51,14 +61,17 @@ const FormComponent: React.FC = () => {
             placeholder="Password"
             className="w-full border border-gray-300 rounded-md p-2 placeholder:text-sm"
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && (
+            <span className="text-red-500">{errors.password.message}</span>
+          )}
         </div>
 
         <button
           className="bg-[#2b3a67] text-white w-full p-3 mt-3 rounded-sm cursor-pointer"
           type="submit"
+          disabled={mutation.status === "pending"}
         >
-          Login
+          {mutation.status === "pending" ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
